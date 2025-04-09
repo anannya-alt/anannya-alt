@@ -1,0 +1,170 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct bstnode
+{
+    int data;
+    struct bstnode* left;
+    struct bstnode* right;
+}bstnode;
+
+bstnode* insert(bstnode* T,int x)
+{
+    bstnode* temp;
+    if(T==NULL)
+    {
+        temp=(bstnode*)malloc(sizeof(bstnode));
+        temp->data=x;
+        temp->left=NULL;
+        temp->right=NULL;
+        return temp;
+    }
+    else if(x<T->data)
+    {
+        T->left= insert(T->left,x);
+    }
+    else if(x>T->data)
+    {
+        T->right= insert(T->right,x);
+    }
+    return T;
+}
+
+void display(bstnode* T)
+{
+    if(T!=NULL)
+    {
+        printf("%d",T->data);
+        display(T->left);
+        display(T->right);
+    }
+}
+
+int total(bstnode* T)
+{
+    int sum;
+    if(T==NULL)
+    {
+        sum=0;
+    }
+    else
+    {
+        sum=T->data+total(T->left)+total(T->right);
+        return sum;
+    }
+}
+
+int count(bstnode* T)
+{
+    int cnt;
+    if(T==NULL)
+    {
+        cnt=0;
+    }
+    else
+    {
+        cnt=1+count(T->left)+count(T->right);
+        return cnt;
+    }
+}
+
+int heightoftree(bstnode* T)
+{
+    int h=-1;
+    int leftheight,rightheight;
+    if(T!=NULL)
+    {
+        leftheight=heightoftree(T->left);
+        rightheight=heightoftree(T->right);
+        if(leftheight > rightheight)
+        {
+            h= leftheight+1;
+        }
+        else
+        {
+            h= rightheight+1;
+        }
+    }
+    return h;
+}
+
+int cntleaf(bstnode* T)
+{
+    int cnt;
+    if(T==NULL)
+    {
+        cnt=0;
+    }
+    else if(T->left==NULL && T->right==NULL)
+    {
+        printf("%d",T->data);
+        cnt=1+cntleaf(T->left)+cntleaf(T->right);
+    }
+    else
+    {
+        cnt=cntleaf(T->left)+cntleaf(T->right);
+    }
+    return cnt;
+}
+
+int printlevel(bstnode* T,int level)
+{
+    if(T!=NULL)
+    {
+        if(level==0)
+        {
+            printf("%d",T->data);
+        }
+        else if(level>0)
+        {
+            printlevel(T->left,level-1);
+            printlevel(T->right,level-1);
+        }
+    }
+}
+
+int main()
+{
+    int n,i,x,ch,sum,ans,cnt;
+    bstnode* root=NULL,*root1=NULL;
+
+    printf("\nEnter how many nodes:");
+    scanf("%d",&n);
+
+    for(i=1;i<=n;i++)
+    {
+        printf("\nEnter data for node:");
+        scanf("%d",&x);
+        root = insert(root,x);
+    }
+    do
+    {
+        printf("\n1:Print");
+        printf("\n2:Count nodes");
+        printf("\n3:Count Leaf node");
+        printf("\n4: Level wise Display");
+        printf("\n5:Quit");
+
+        printf("\nEnter your choice:");
+        scanf("%d",&ch);
+     switch(ch)
+     {
+        case 1: display(root);
+                break;
+        case 2: cnt = count(root);
+                printf("\nNumber of nodes is %d",cnt);
+                break;
+       
+        case 3: cnt = cntleaf(root);
+                printf("\nNumber of leaf nodes are %d",cnt);
+                break;
+        case 4: ans = heightoftree(root);
+                 for(i=0;i<=ans;i++)
+                 {
+                    printlevel(root,i);
+                    printf("\n");
+                 }
+                break;
+     }
+    }while(ch!=6);
+  return 0;
+}
