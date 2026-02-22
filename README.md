@@ -2,8 +2,7 @@
 - 👀 I’m interested in ethical hacking
 - 🌱 I’m currently learning computer science
 - 💞️ I’m looking to collaborate on projects
-- 📫 How to reach me ...
-- 😄 Pronouns: ...
+- 📫 How to reach me :anannyadebnath30gmail.com 
 - ⚡ Fun fact: ...
 
 <!---
